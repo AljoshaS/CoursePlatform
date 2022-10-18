@@ -21,9 +21,21 @@ class InstructorView(APIView):
 
     permission_classes=(IsAuthenticated,)
 
-    def get(self, request):
-        instructor=Instructor.objects.get(id=request.GET['instructorId'])
-        instructor_serializer=InstructorSerializer(instructor)
+    def get_queryset(self):
+        instructor=Instructor.objects.all()
+        return instructor
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id=request.GET["instructorId"]
+            if id!=None:
+                instructor=instructor.objects.get(id=id)
+                instructor_serializer=InstructorSerializer(instructor)
+            
+        except:
+            instructor=self.get_queryset()
+            instructor_serializer=InstructorSerializer(instructor, many=True)
+
         return Response(instructor_serializer.data)
     
     def post(self, request):
@@ -52,9 +64,21 @@ class StudentView(APIView):
 
     permission_classes=(IsAuthenticated,)
 
-    def get(self, request):
-        student=Student.objects.get(id=request.GET['studentId'])
-        student_serializer=StudentSerializer(student)
+    def get_queryset(self):
+        student=Student.objects.all()
+        return student
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id=request.GET["studentId"]
+            if id!=None:
+                student=student.objects.get(id=id)
+                student_serializer=StudentSerializer(student)
+            
+        except:
+            student=self.get_queryset()
+            student_serializer=StudentSerializer(student, many=True)
+
         return Response(student_serializer.data)
     
     def post(self, request):
@@ -83,9 +107,21 @@ class CourseView(APIView):
 
     permission_classes=(IsAuthenticated,)
 
-    def get(self, request):
-        course=Course.objects.get(id=request.GET['courseId'])
-        course_serializer=CourseSerializer(course)
+    def get_queryset(self):
+        course=Course.objects.all()
+        return course
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id=request.GET["courseId"]
+            if id!=None:
+                course=Course.objects.get(id=id)
+                course_serializer=CourseSerializer(course)
+            
+        except:
+            course=self.get_queryset()
+            course_serializer=CourseSerializer(course, many=True)
+
         return Response(course_serializer.data)
     
     def post(self, request):
@@ -129,10 +165,22 @@ class FileView(APIView):
         file.delete()
         return Response({"info": "The entry is deleted"})
 
-    def get(self, request):
-        file=File.objects.get(id=request.GET['fileId'])
-        file_serializer=FileSerializer(file)
-        return Response(file_serializer.data)
+    def get_queryset(self):
+        file=File.objects.all()
+        return file
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id=request.GET["fileId"]
+            if id!=None:
+                file=File.objects.get(id=id)
+                file_serializer=FileSerializer(file)
+            
+        except:
+            file=self.get_queryset()
+            file_serializer=FileSerializer(file, many=True)
+
+        return Response(file_serializer.data)   
 
     def patch(self, request):
         file=File.objects.get(id=request.data['id'])
@@ -146,10 +194,22 @@ class FileView(APIView):
 class AttendanceView(APIView):
     permission_classes=(IsAuthenticated,)
 
-    def get(self, request):
-        attendance=Attendance.objects.get(id=request.GET['attendanceId'])
-        attendance_serializer=AttendanceSerializer(attendance)
-        return Response(attendance_serializer.data)
+    def get_queryset(self):
+        attendance=Attendance.objects.all()
+        return attendance
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id=request.GET["attendanceId"]
+            if id!=None:
+                attendance=Attendance.objects.get(id=id)
+                attendance_serializer=AttendanceSerializer(attendance)
+            
+        except:
+            attendance=self.get_queryset()
+            attendance_serializer=AttendanceSerializer(attendance, many=True)
+
+        return Response(attendance_serializer.data)   
     
     def post(self, request):
         attendance_serializer=AttendanceSerializer(data=request.data)
@@ -177,10 +237,22 @@ class AssistantView(APIView):
 
     permission_classes=(IsAuthenticated,)
 
-    def get(self, request):
-        assistant=Assistant.objects.get(id=request.GET['assistantId'])
-        assistant_serializer=AssistantSerializer(assistant)
-        return Response(assistant_serializer.data)
+    def get_queryset(self):
+        assistant=Assistant.objects.all()
+        return assistant
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id=request.GET["assistantId"]
+            if id!=None:
+                assistant=Assistant.objects.get(id=id)
+                assistant_serializer=AssistantSerializer(assistant)
+            
+        except:
+            assistant=self.get_queryset()
+            assistant_serializer=AssistantSerializer(assistant, many=True)
+
+        return Response(assistant_serializer.data)    
     
     def post(self, request):
         assistant_serializer=AssistantSerializer(data=request.data)
